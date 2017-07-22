@@ -3,7 +3,6 @@ import Post from './Post';
 import './App.css';
 import DayPicker from 'react-day-picker';
 import './reactDayPickerStyle.css';
-import {Grid} from 'semantic-ui-react'
 
 class App extends React.Component {
   constructor(props) {
