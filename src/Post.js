@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Card, Grid, Image} from 'semantic-ui-react'
-import Write from './Write'
 class Post extends Component {
   render() {
     const {posts} = this.props;
@@ -29,7 +28,6 @@ class Post extends Component {
     </Grid.Column>);
     return (
       <div className="Post">
-        <Write/>
         <Grid columns={4} stackable>
           {parsedPosts}
         </Grid>

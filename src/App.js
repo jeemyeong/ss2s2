@@ -3,6 +3,7 @@ import Post from './Post';
 import './App.css';
 import DayPicker from 'react-day-picker';
 import './reactDayPickerStyle.css';
+import Write from './Write'
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class App extends React.Component {
     const state = {
       posts: [
         {
-          date: new Date(2017, 6, 22),
+          date: new Date(2017, 6, 21),
           text: 'sampleText1',
           photoUrls: [
             "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_37397520" +
@@ -29,7 +30,7 @@ class App extends React.Component {
       ],
       postedDay: [],
       postsByDay: {},
-      selectedDay: new Date().toDateString()
+      selectedDay: new Date().toLocaleDateString()
     }
     state
       .posts
@@ -39,7 +40,7 @@ class App extends React.Component {
           .push(e.date)
         const date = e
           .date
-          .toDateString();
+          .toLocaleDateString();
         if (!!state.postsByDay[date]) {
           state
             .postsByDay[date]
@@ -57,24 +58,30 @@ class App extends React.Component {
   }
 
   render() {
-    const {postedDay} = this.state;
+    const {postedDay, postsByDay, selectedDay} = this.state;
     const modifiers = {
       postedDay
     };
+    
     return (
       <div className="App" style={appStyle}>
         <DayPicker
+          numberOfMonths={window.innerWidth < 768? 1 : 2}
           modifiers={modifiers}
           month={new Date()}
           onDayClick={(clickedDay, modifiers, e) => this._click(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
-        <Post posts={this.state.postsByDay[this.state.selectedDay]}/>
+        <div>
+          {selectedDay}
+        </div>
+        <Write/>
+        <Post posts={postsByDay[selectedDay]}/>
       </div>
     );
   }
   _click(clickedDay, modifiers, e) {
     this.setState({
-      selectedDay: clickedDay.toDateString()
+      selectedDay: clickedDay.toLocaleDateString()
     })
   }
 }
