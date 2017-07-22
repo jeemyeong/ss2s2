@@ -7,7 +7,7 @@ class Write extends Component {
     super(props);
     this.state = {
       contents: '',
-      file: null
+      files: []
     };
   }
 
@@ -22,7 +22,7 @@ class Write extends Component {
     if (acceptedFiles[0] !== undefined) {
       this.setState({
         ...this.state,
-        file: acceptedFiles[0]
+        files: acceptedFiles
       });
     } else {
       console.log("ERROR");
@@ -33,12 +33,13 @@ class Write extends Component {
     const formStyle = {
       margin: "auto",
       marginBottom: "2em",
-      width: window.innerWidth < 768?
-      "80%" : "50%"
+      width: window.innerWidth < 768
+        ? "80%"
+        : "50%"
     }
     return (
       <Form onSubmit={this.handleSubmit} style={formStyle}>
-        <Form.Field 
+        <Form.Field
           control={TextArea}
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
@@ -51,8 +52,11 @@ class Write extends Component {
           accept={`image/*`}
           style={dropZoneStyle}>
           <div style={explanationStyle}>
-            {this.state.file !== null
-              ? <Image src={this.state.file.preview}/>
+            {this.state.files.length > 0
+              ? this
+                .state
+                .files
+                .map((file, index) => <Image src={file.preview} key={index}/>)
               : <Icon name="image" size="big"/>}
           </div>
         </Dropzone>
