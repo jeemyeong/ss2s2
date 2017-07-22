@@ -1,33 +1,101 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {Button, Form, TextArea, Icon, Image} from 'semantic-ui-react'
+import Dropzone from 'react-dropzone';
 
 class Write extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      text: '',
-      files: [],
-      writter: ''
+      contents: '',
+      files: []
+    };
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    // this.props.onCreatePost(this.props.userInfo, this.state.contents,
+    // this.state.file)
+    this.setState({contents: '', file: null})
+  }
+
+  onDrop = (acceptedFiles, rejectedFiles) => {
+    if (acceptedFiles[0] !== undefined) {
+      this.setState({
+        ...this.state,
+        files: acceptedFiles
+      });
+    } else {
+      console.log("ERROR");
     }
   }
-  
   render() {
-    console.log("render");
-    const {visible} = this.props;
-    if (!visible){
-      return null;
+
+    const formStyle = {
+      margin: "auto",
+      marginBottom: "2em",
+      width: window.innerWidth < 768
+        ? "80%"
+        : "50%"
     }
     return (
-      <form>
-        <input type="text" onChange={e => this.setState({text:e.target.value})}/>
-        <br/>
-        <input type="file"/>
-        <br/>
-        <input type="text"/>
-        <br/>
-        <button type="submit"/>
-      </form>
+      <Form onSubmit={this.handleSubmit} style={formStyle}>
+        <Form.Field
+          control={TextArea}
+          style={inputBoxStyle}
+          placeholder='하고 싶은 말😘'
+          value={this.state.contents}
+          onChange={e => this.setState({contents: e.target.value})}/>
+
+        <Dropzone
+          onDrop={this.onDrop}
+          maxSize={2097152}
+          accept={`image/*`}
+          style={dropZoneStyle}>
+          <div style={explanationStyle}>
+            {this.state.files.length > 0
+              ? this
+                .state
+                .files
+                .map((file, index) => <Image src={file.preview} key={index}/>)
+              : <Icon name="image" size="big"/>}
+          </div>
+        </Dropzone>
+
+        <Button type='submit' style={submitButtonStyle}>
+          입력
+        </Button>
+
+      </Form>
     );
   }
+}
+
+const inputBoxStyle = {
+  marginTop: "0.2em",
+  marginBottom: "0.2em",
+  width: "100%"
+}
+const submitButtonStyle = {
+  marginTop: "0.2em",
+  marginBottom: "0.2em",
+  width: "100%"
+}
+const dropZoneStyle = {
+  margin: "auto",
+  marginTop: "0.2em",
+  marginBottom: "0.2em",
+  width: "100%",
+  height: "200px",
+  borderWidth: "2px",
+  borderColor: "rgb(102, 102, 102)",
+  borderStyle: "dashed",
+  borderRadius: "5px",
+  display: "table"
+}
+const explanationStyle = {
+  display: "table-cell",
+  verticalAlign: "middle",
+  textAlign: "center"
 }
 
 export default Write;
