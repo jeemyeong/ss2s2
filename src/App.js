@@ -1,7 +1,7 @@
 import React from 'react';
 import Post from './Post';
 import './App.css';
-import DayPicker, {DateUtils} from 'react-day-picker';
+import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 class App extends React.Component {
@@ -66,22 +66,24 @@ class App extends React.Component {
         <DayPicker
           modifiers={modifiers}
           month={new Date()}
-          onDayClick={(clickedDay, modifiers, e) => this._click(clickedDay, modifiers, e)}/>
+          onDayClick={(clickedDay, modifiers, e) => this._click(clickedDay, modifiers, e)}
+          style={dayPickerStyle}/>
         <Post posts={this.state.postsByDay[this.state.selectedDay]}/>
       </div>
     );
   }
   _click(clickedDay, modifiers, e) {
-    const day = DateUtils.clone(clickedDay);
-    day.setHours(clickedDay.getHours() - 12);
-    const stringifiedDay = day.toDateString();
-    const {postsByDay} = this.state;
-    if (!!postsByDay[stringifiedDay]) {
-      console.log(postsByDay[stringifiedDay]);
-    }
     this.setState({
-      selectedDay: day.toDateString()
+      selectedDay: clickedDay.toDateString()
     })
   }
+}
+
+const dayPickerStyle = {
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: "10",
 }
 export default App;
