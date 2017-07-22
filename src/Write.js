@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Form, Input, Icon, Image} from 'semantic-ui-react'
+import {Button, Form, TextArea, Icon, Image} from 'semantic-ui-react'
 import Dropzone from 'react-dropzone';
 
 class Write extends Component {
@@ -29,15 +29,21 @@ class Write extends Component {
     }
   }
   render() {
-    const formWidth = window.innerWidth < 768
-      ? {width: "80%"}
-      : {width: "30%"}
+
+    const formStyle = {
+      margin: "auto",
+      marginBottom: "2em",
+      width: window.innerWidth < 768?
+      "80%" : "50%"
+    }
     return (
-      <Form onSubmit={this.handleSubmit} style={Object.assign(formStyle,formWidth)}>
-        <Input
+      <Form onSubmit={this.handleSubmit} style={formStyle}>
+        <Form.Field 
+          control={TextArea}
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
           value={this.state.contents}
+          lineHeight="40px"
           onChange={e => this.setState({contents: e.target.value})}/>
 
         <Dropzone
@@ -61,10 +67,6 @@ class Write extends Component {
   }
 }
 
-const formStyle = {
-  margin: "auto",
-  marginBottom: "2em"
-}
 const inputBoxStyle = {
   marginTop: "0.2em",
   marginBottom: "0.2em",
