@@ -1,7 +1,7 @@
 import React from 'react';
 import Write from './Write';
 import './App.css';
-import DayPicker from 'react-day-picker';
+import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
 class App extends React.Component {
@@ -34,22 +34,24 @@ class App extends React.Component {
 		state.posts.map(
 			(e) => {
 				state.postedDay.push(e.date)
-				if(!!state.postsByDay[e.date]){
-					state.postsByDay[e.date].push(e)
+				const date = JSON.stringify(e.date);
+				if(!!state.postsByDay[date]){
+					state.postsByDay[date].push(e)
+					return null;
 				}else{
-					state.postsByDay[e.date] = []
-					state.postsByDay[e.date].push(e)
+					state.postsByDay[date] = []
+					state.postsByDay[date].push(e)
+					return null;
 				}
 			}
 		)
 		this.state = state;
-		console.log(this.state);
 	}
 	
     render() {
-		const {postedDay} = this.state;
+		const { postedDay } = this.state;
 		const modifiers = {
-			postedDay,
+			postedDay
 		};
         return (
             <div className = "App" >
@@ -59,19 +61,19 @@ class App extends React.Component {
 							<DayPicker
 								modifiers={modifiers}
 								month={new Date(2017,7)}
-								onDayClick={(day,modifiers,e) => this._click(day,modifiers,e)}
+								onDayClick={(clickedDay,modifiers,e) => this._click(clickedDay,modifiers,e)}
 							/>
             </div>
         );
 	}
-	_click(day,modifiers,e) {
-		// this.setState({writeVisible : true})
-		const {postsByDay} = this.state;
-		console.log(day);
-		const strDay = JSON.stringify(day);
-		console.log(postsByDay);
-		console.log([postsByDay["Sat Aug 19 2017 12:00:00 GMT+0900 (KST)"]]);
+	_click(clickedDay,modifiers,e) {
+		const day = DateUtils.clone(clickedDay);
+		day.setHours(clickedDay.getHours()-12);
+		const stringifiedDay = JSON.stringify(day);
+		const { postsByDay } = this.state;
+		if(!!postsByDay[stringifiedDay]){
+			console.log(postsByDay[stringifiedDay]);
+		}
 	}
 }
-
 export default App;
