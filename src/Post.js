@@ -35,7 +35,7 @@ class Post extends Component {
       <div className="Post">
         <Write/>
         <Grid
-          columns={3} 
+          columns={4} 
           stackable
         >
           {parsedPosts}
