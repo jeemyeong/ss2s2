@@ -43,7 +43,6 @@ class Write extends Component {
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
           value={this.state.contents}
-          lineHeight="40px"
           onChange={e => this.setState({contents: e.target.value})}/>
 
         <Dropzone
