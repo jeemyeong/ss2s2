@@ -29,8 +29,11 @@ class Write extends Component {
     }
   }
   render() {
+    const formWidth = window.innerWidth < 768
+      ? {width: "80%"}
+      : {width: "30%"}
     return (
-      <Form onSubmit={this.handleSubmit} style={formStyle}>
+      <Form onSubmit={this.handleSubmit} style={Object.assign(formStyle,formWidth)}>
         <Input
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
@@ -60,10 +63,7 @@ class Write extends Component {
 
 const formStyle = {
   margin: "auto",
-  marginBottom: "2em",
-  width: window.innerWidth < 768
-    ? "80%"
-    : "30%"
+  marginBottom: "2em"
 }
 const inputBoxStyle = {
   marginTop: "0.2em",
