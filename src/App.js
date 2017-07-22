@@ -1,5 +1,4 @@
 import React from 'react';
-import Write from './Write';
 import Post from './Post';
 import './App.css';
 import DayPicker, { DateUtils } from 'react-day-picker';
@@ -28,7 +27,6 @@ class App extends React.Component {
 					writter: '이지명'
 				}
 			],
-			writeVisible:false,
 			postedDay: [],
 			postsByDay: {},
 			selectedDay: new Date().toDateString()
@@ -61,9 +59,6 @@ class App extends React.Component {
 								modifiers={modifiers}
 								month={new Date()}
 								onDayClick={(clickedDay,modifiers,e) => this._click(clickedDay,modifiers,e)}
-							/>
-							<Write
-								visible={this.state.writeVisible}
 							/>
 							<Post
 								posts={this.state.postsByDay[this.state.selectedDay]}

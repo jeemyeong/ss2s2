@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Grid, Image } from 'semantic-ui-react'
-
+import Write from './Write'
 class Post extends Component {
   render() {
     const { posts } = this.props;
@@ -8,8 +8,12 @@ class Post extends Component {
       return null;
     }
     const parsedPosts = posts.map((post, index)=>
-      <Grid.Column key={index}>
-        <Card>
+      <Grid.Column 
+        key={index}
+      >
+        <Card
+          centered
+        >
           {post.photoUrls.map((photoUrl, index) =>
             <Image src={photoUrl} key={index}/>
           )}
@@ -28,11 +32,15 @@ class Post extends Component {
       </Grid.Column>
     );
     return (
-      <Grid
-        columns={3} 
-      >
-        {parsedPosts}
-      </Grid>
+      <div className="Post">
+        <Write/>
+        <Grid
+          columns={3} 
+          stackable
+        >
+          {parsedPosts}
+        </Grid>
+      </div>
     );
   }
 }
