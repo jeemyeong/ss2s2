@@ -152,7 +152,7 @@
 /* Default modifiers */
 
 .DayPicker-Day--today {
-  color: #d0021b;
+   /* color: #d0021b;  */
   font-weight: 500;
 }
 
@@ -179,7 +179,7 @@
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: #FFF;
-  background-color: #4A90E2;
+  background-color: #CCAAEE;
 }
 
 /* DayPickerInput */

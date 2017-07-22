@@ -30,7 +30,8 @@ class App extends React.Component {
       ],
       postedDay: [],
       postsByDay: {},
-      selectedDay: new Date().toLocaleDateString()
+      StringifiedSelectedDay: new Date().toLocaleDateString(),
+      selectedDay: new Date()
     }
     state
       .posts
@@ -58,7 +59,8 @@ class App extends React.Component {
   }
 
   render() {
-    const {postedDay, postsByDay, selectedDay} = this.state;
+    const {postedDay, postsByDay, StringifiedSelectedDay, selectedDay} = this.state;
+    console.log(postedDay);
     const modifiers = {
       postedDay
     };
@@ -67,21 +69,22 @@ class App extends React.Component {
       <div className="App" style={appStyle}>
         <DayPicker
           numberOfMonths={window.innerWidth < 768? 1 : 2}
-          modifiers={modifiers}
-          month={new Date()}
+          selectedDays={selectedDay} 
+          modifiers ={modifiers}
           onDayClick={(clickedDay, modifiers, e) => this._click(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
         <div>
-          {selectedDay}
+          {StringifiedSelectedDay}
         </div>
         <Write/>
-        <Post posts={postsByDay[selectedDay]}/>
+        <Post posts={postsByDay[StringifiedSelectedDay]}/>
       </div>
     );
   }
   _click(clickedDay, modifiers, e) {
     this.setState({
-      selectedDay: clickedDay.toLocaleDateString()
+      StringifiedSelectedDay: clickedDay.toLocaleDateString(),
+      selectedDay: clickedDay
     })
   }
 }
