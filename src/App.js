@@ -4,6 +4,7 @@ import Post from './Post';
 import './App.css';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import 'semantic-ui-css/semantic.min.css';
 
 class App extends React.Component {
 	constructor (props) {
