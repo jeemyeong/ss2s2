@@ -1,8 +1,6 @@
 import React from 'react';
 import Post from './Post';
-import './App.css';
 import DayPicker from 'react-day-picker';
-import './reactDayPickerStyle.css';
 import Write from './Write'
 
 class App extends React.Component {
@@ -93,7 +91,8 @@ const dayPickerStyle = {
   zIndex: "10"
 }
 const appStyle = {
-  margin: "auto"
+  margin: "auto",
+  textAlign: "center"
 }
 
 export default App;
