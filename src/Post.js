@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Image } from 'semantic-ui-react'
 
 class Post extends Component {
   render() {
@@ -16,7 +17,7 @@ class Post extends Component {
         </li>
         <li>
           photoUrls: {post.photoUrls.map((photoUrl, index) =>
-            <img src={photoUrl} alt="photoUrl" key={index}/>
+            <Image src={photoUrl} size='small' key={index}/>
           )}
         </li>
         <li>
