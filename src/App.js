@@ -2,7 +2,8 @@ import React from 'react';
 import Post from './Post';
 import './App.css';
 import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import './reactDayPickerStyle.css';
+import {Grid} from 'semantic-ui-react'
 
 class App extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class App extends React.Component {
       postedDay
     };
     return (
-      <div className="App">
+      <div className="App" style={appStyle}>
         <DayPicker
           modifiers={modifiers}
           month={new Date()}
@@ -84,6 +85,10 @@ const dayPickerStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  zIndex: "10",
+  zIndex: "10"
 }
+const appStyle = {
+  margin: "auto"
+}
+
 export default App;
