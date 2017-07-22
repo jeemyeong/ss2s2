@@ -58,15 +58,10 @@ class Write extends Component {
   }
 }
 
-let mobile = false
-if (window.innerWidth < 768) {
-  mobile = true;
-}
-
 const formStyle = {
   margin: "auto",
   marginBottom: "2em",
-  width: mobile
+  width: window.innerWidth < 768
     ? "80%"
     : "30%"
 }
