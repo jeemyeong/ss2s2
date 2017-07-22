@@ -60,17 +60,13 @@ class App extends React.Component {
 
   render() {
     const {postedDay, postsByDay, StringifiedSelectedDay, selectedDay} = this.state;
-    console.log(postedDay);
-    const modifiers = {
-      postedDay
-    };
     
     return (
       <div className="App" style={appStyle}>
         <DayPicker
           numberOfMonths={window.innerWidth < 768? 1 : 2}
           selectedDays={selectedDay} 
-          modifiers ={modifiers}
+          modifiers ={{postedDay}}
           onDayClick={(clickedDay, modifiers, e) => this._click(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
         <div>
