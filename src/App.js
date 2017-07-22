@@ -11,7 +11,7 @@ class App extends React.Component {
 		const state = {
 			posts: [
 				{
-					date: new Date(2017,6,19),
+					date: new Date(2017,6,22),
 					text: 'sampleText1',
 					photoUrls: [
 						"https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/18952672_1325477787549113_3739752028675042452_n.jpg?oh=b4f408c9b72623353f6d7f01ff22b8eb&oe=5A0F11F1",
@@ -66,8 +66,7 @@ class App extends React.Component {
 								visible={this.state.writeVisible}
 							/>
 							<Post
-								visible={true}
-								post={this.state.postsByDay[this.state.selectedDay]}
+								posts={this.state.postsByDay[this.state.selectedDay]}
 							/>
             </div>
         );
@@ -80,7 +79,7 @@ class App extends React.Component {
 		if(!!postsByDay[stringifiedDay]){
 			console.log(postsByDay[stringifiedDay]);
 		}
-		this.setState({selectedDay: day})
+		this.setState({selectedDay: day.toDateString()})
 	}
 }
 export default App;
