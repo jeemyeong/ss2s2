@@ -83,11 +83,15 @@ export class PostStore {
   }
 
   @action
-  deletePost = (id) => {
-    const ref = database.ref();
-    ref
+  deletePost = (post) => {
+    if(!!post.photoUrls){
+      Object.keys(post.photoUrls).forEach((id, index) =>
+        this.storageRef.child(id).delete()
+      )
+    }
+    this.databaseRef
       .child('posts')
-      .child(id)
+      .child(post.id)
       .remove();
   }
   @action
@@ -98,7 +102,7 @@ export class PostStore {
   
   async getUrlsByUploading(photoFiles) {
     const now = Date()
-    let urls = [];
+    let urls = {};
     for (var i = 0; i < photoFiles.length; i++) {
       await this.addUrlByUploading(photoFiles[i], i, now, urls);
     }
@@ -112,7 +116,7 @@ export class PostStore {
     await mountainsRef
       .put(photoFile)
       .then((snapshot) => {
-        urls.push(snapshot.metadata.downloadURLs[0]);
+        urls[filename] = snapshot.metadata.downloadURLs[0];
       });
   }
 

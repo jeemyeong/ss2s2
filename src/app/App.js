@@ -10,6 +10,14 @@ import {Divider} from 'semantic-ui-react'
 class App extends React.Component {
 
   render() {
+    const appStyle = {
+      margin: "auto",
+      textAlign: "center",
+      width: window.innerWidth < 768
+        ? "100%"
+        : "90%"
+    }
+
     const {postedDay, selectedDay} = this.props.postStore.postsState;
     return (
       <div className="App" style={appStyle}>
@@ -24,7 +32,10 @@ class App extends React.Component {
         }}
           onDayClick={(clickedDay, modifiers, e) => this.props.postStore.clickDay(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
-        <Post postStore={this.props.postStore.postsState}/>
+        <Post 
+          postStore={this.props.postStore.postsState}
+          deletePost={this.props.postStore.deletePost}
+        />
         <Divider horizontal>Write</Divider>
         <Write addPost={this.props.postStore.addPost}/>
       </div>
@@ -38,10 +49,6 @@ const dayPickerStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   zIndex: "10"
-}
-const appStyle = {
-  margin: "auto",
-  textAlign: "center"
 }
 
 export default App;

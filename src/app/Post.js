@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Grid, Image} from 'semantic-ui-react'
 import {observer} from 'mobx-react';
-import { Divider } from 'semantic-ui-react'
+import {Divider, Icon} from 'semantic-ui-react'
 
 @observer
 class Post extends Component {
@@ -14,12 +14,19 @@ class Post extends Component {
     const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
       <Card centered>
         {!!post.photoUrls
-          ? post
-            .photoUrls
-            .map((photoUrl, index) => <Image src={photoUrl} key={index}/>)
+          ? Object
+            .keys(post.photoUrls)
+            .map((id, index) => <Image src={post.photoUrls[id]} key={index}/>)
           : null}
         <Card.Content>
-          <Card.Header>{post.text}</Card.Header>
+          <Card.Header>
+            {post.text}
+          </Card.Header>
+          <Icon
+            name='remove'
+            onClick={e => this
+            .props
+            .deletePost(post)}/>
           <Card.Meta>{post
               .date
               .toLocaleDateString()}</Card.Meta>

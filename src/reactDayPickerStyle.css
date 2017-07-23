@@ -179,7 +179,7 @@
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   color: #FFF;
-  background-color: #CCAAEE;
+  background-color: #ffc107;
 }
 
 /* DayPickerInput */
@@ -204,10 +204,10 @@
 
 .DayPicker-Day--postedDay {
   color: white;
-  background-color: #ffc107;
+  background-color: #CCAAEE;
 }
 
-.DayPicker-Day--mondays:not(.DayPicker-Day--outside) {
+/* .DayPicker-Day--mondays:not(.DayPicker-Day--outside) {
   color: #ffc107;
   background-color: #fffdee;
-}
+} */
