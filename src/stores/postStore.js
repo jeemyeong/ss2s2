@@ -62,16 +62,14 @@ export class PostStore {
                 return null;
               }
             })
-          console.log(state);
           this.postsState = state;
-          console.log(this.postsState);
         }
       }));
   }
 
   @action
   addPost = async(text, photoFiles) => {
-    if (text === "" || photoFiles === []) {
+    if (text === "" && photoFiles === []) {
       return;
     }
     const writter = this.postsState.auth
