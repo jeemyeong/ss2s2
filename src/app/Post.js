@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Card, Grid, Image} from 'semantic-ui-react'
+import {Card, Image} from 'semantic-ui-react'
 import {observer} from 'mobx-react';
 import {Divider, Icon} from 'semantic-ui-react'
+import Masonry from './Masonry'
 
 @observer
 class Post extends Component {
@@ -11,59 +12,87 @@ class Post extends Component {
       return null;
     }
     const posts = postsByDate[stringifiedSelectedDay]
-    const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
-      <Card centered className={`animated fadeIn`}>
-        {!!post.photoUrls
-          ? Object
-            .keys(post.photoUrls)
-            .map((id, index) => 
-            <imageWrapper
-              style={imageWrapperStyle}
-              key={index}
-            >
-              <Image src={post.photoUrls[id]} />
-            </imageWrapper>
-            )
-          : null}
-        <Card.Content>
-          <Card.Header>
-            {post.text}
-          </Card.Header>
-          <Icon
-            name='remove'
-            onClick={e => this
-            .props
-            .deletePost(post)}/>
-          <Card.Meta>{post
-              .date
-              .toLocaleDateString()}</Card.Meta>
-          <Card.Description>
-            <Image src={post.userInfo.photoURL} avatar />
-            {post.userInfo.displayName}
-          </Card.Description>
-        </Card.Content>
-      </Card>
-    </Grid.Column>);
+    const parsedPosts = []
+    posts.map((post, index) => {
+      parsedPosts.push(
+        <CardWrapper
+          style={CardWrapperStyle}
+          key={index}
+        >
+          <Card centered className={`animated fadeIn`}>
+            {!!post.photoUrls
+              ? Object
+                .keys(post.photoUrls)
+                .map((id, index) => 
+                <ImageWrapper
+                  style={ImageWrapperStyle}
+                  key={index}
+                >
+                  <Image src={post.photoUrls[id]} />
+                </ImageWrapper>
+                )
+              : null}
+            <Card.Content>
+              <Card.Header>
+                {post.text}
+              </Card.Header>
+              <Icon
+                name='remove'
+                onClick={e => this
+                .props
+                .deletePost(post)}/>
+              <Card.Meta>{post
+                  .date
+                  .toLocaleDateString()}</Card.Meta>
+              <Card.Description>
+                <Image src={post.userInfo.photoURL} avatar />
+                {post.userInfo.displayName}
+              </Card.Description>
+            </Card.Content>
+          </Card>
+        </CardWrapper>
+      )
+      return null;
+    });
     return (
-      <div className="Post">
+      <div className="Post" ref="Post">
         <Divider horizontal>{stringifiedSelectedDay}</Divider>
-        <Grid columns={4} stackable>
+        <Masonry 
+          brakePoints={[350, 500, 750]}
+        >
           {parsedPosts}
-        </Grid>
+        </Masonry>
       </div>
     );
   }
 }
 
-const imageWrapper = ({style, key, children}) => (
-  <div>
+const ImageWrapper = ({style, children}) => (
+  <div
+    style={style}
+  >
     {children}
   </div>
 )
 
-const imageWrapperStyle = {
+const ImageWrapperStyle = {
   margin: "1rem",
   align: "center",
   textAlign: "center",
 }
+
+const CardWrapper = ({style, children}) => (
+  <div
+    style={style}
+  >
+    {children}
+  </div>
+)
+
+const CardWrapperStyle = {
+  margin: "10px",
+  align: "center",
+  textAlign: "center",
+}
+
 export default Post;
