@@ -30,7 +30,13 @@ export class PostStore {
             for (const key of Object.keys(list)) {
               const stringDate = list[key].date
               const parts = stringDate.split('/');
-              const date = new Date(parts[2], parts[0] - 1, parts[1]);
+              let date;
+              if(parts.length > 1){
+                date = new Date(parts[2], parts[0] - 1, parts[1]);
+              }else{
+                const originalParts = stringDate.replace(".","").split(' ')
+                date = new Date(originalParts[2], originalParts[0] - 1, originalParts[1]);
+              }
               state
                 .posts
                 .push({id: key, date, text: list[key].text, photoUrls: list[key].photoUrls, userInfo: list[key].userInfo});
