@@ -62,6 +62,7 @@ class App extends React.Component {
           addPost={this.props.postStore.addPost}
           authState={this.props.authStore.authState}
         />
+        <Divider horizontal>END</Divider>
       </div>
     );
   }
