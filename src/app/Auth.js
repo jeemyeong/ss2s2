@@ -8,7 +8,7 @@ class Auth extends Component {
   render() {
     return (
       <AuthWrapper
-        style={window.innerWidth < 768?authWrapperMobileStyle:authWrapperStyle}
+        style={window.innerWidth < 768?AuthWrapperMobileStyle:AuthWrapperStyle}
       >
         <Image 
           src={authImage}
@@ -32,7 +32,7 @@ const AuthWrapper = ({style, children}) => (
     {children}
   </div>
 )
-const authWrapperStyle = {
+const AuthWrapperStyle = {
   margin: "auto",
   align: "center",
   textAlign: "center",
@@ -42,7 +42,7 @@ const authWrapperStyle = {
   transform: "translate(-50%, -50%)",
   zIndex: "10"
 }
-const authWrapperMobileStyle = {
+const AuthWrapperMobileStyle = {
   margin: "auto",
   align: "center",
   textAlign: "center",
