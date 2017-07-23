@@ -42,7 +42,9 @@ class Write extends Component {
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
           value={this.state.text}
-          onChange={e => this.setState({text: e.target.value})}/>
+          onChange={e => this.setState({text: e.target.value})}
+          onKeyPress={e => e.key==='Enter'?this.handleSubmit(e):null}
+          />
 
         <Dropzone
           onDrop={this.onDrop}
