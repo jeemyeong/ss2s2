@@ -35,7 +35,7 @@ export class PostStore {
                 date = new Date(parts[2], parts[0] - 1, parts[1]);
               }else{
                 const originalParts = stringDate.replace(".","").split(' ')
-                date = new Date(originalParts[2], originalParts[0] - 1, originalParts[1]);
+                date = new Date(originalParts[0], originalParts[1] - 1, originalParts[2]);
               }
               state
                 .posts
