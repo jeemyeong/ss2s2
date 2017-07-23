@@ -13,6 +13,8 @@ class Post extends Component {
     }
     const posts = postsByDate[stringifiedSelectedDay]
     const parsedPosts = []
+    const { innerWidth } = window;
+    const brakePoints = innerWidth < 768? [] : innerWidth < 1000? [innerWidth/2] : [250,500,750]
     posts.map((post, index) => {
       parsedPosts.push(
         <CardWrapper
@@ -58,7 +60,7 @@ class Post extends Component {
       <div className="Post" ref="Post">
         <Divider horizontal>{stringifiedSelectedDay}</Divider>
         <Masonry 
-          brakePoints={[350, 500, 750]}
+          brakePoints={brakePoints}
         >
           {parsedPosts}
         </Masonry>
