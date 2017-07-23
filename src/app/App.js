@@ -3,12 +3,13 @@ import Post from './Post';
 import DayPicker from 'react-day-picker';
 import Write from './Write'
 import {observer, inject} from 'mobx-react';
+import { Divider } from 'semantic-ui-react'
 
 const App = inject("postStore")(observer(class App extends React.Component {
 
   render() {
     const state = this.props.postStore.postsState;
-    const {postedDay, StringifiedSelectedDay, selectedDay} = state;
+    const {postedDay, selectedDay} = state;
     return (
       <div className="App" style={appStyle}>
         <DayPicker
@@ -22,10 +23,8 @@ const App = inject("postStore")(observer(class App extends React.Component {
         }}
           onDayClick={(clickedDay, modifiers, e) => this.props.postStore.clickDay(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
-        <div>
-          {StringifiedSelectedDay}
-        </div>
         <Post postStore={this.props.postStore.postsState}/>
+        <Divider horizontal>Write</Divider>
         <Write addPost={this.props.postStore.addPost}/>
       </div>
     );

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Grid, Image} from 'semantic-ui-react'
 import {observer} from 'mobx-react';
+import { Divider } from 'semantic-ui-react'
 
 const Post = observer(class Post extends Component {
   render() {
@@ -33,6 +34,7 @@ const Post = observer(class Post extends Component {
     </Grid.Column>);
     return (
       <div className="Post">
+        <Divider horizontal>{StringifiedSelectedDay}</Divider>
         <Grid columns={4} stackable>
           {parsedPosts}
         </Grid>
