@@ -24,7 +24,10 @@ class App extends React.Component {
         }}
           onDayClick={(clickedDay, modifiers, e) => this.props.postStore.clickDay(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>
-        <Post postStore={this.props.postStore.postsState}/>
+        <Post 
+          postStore={this.props.postStore.postsState}
+          deletePost={this.props.postStore.deletePost}
+        />
         <Divider horizontal>Write</Divider>
         <Write addPost={this.props.postStore.addPost}/>
       </div>
