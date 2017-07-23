@@ -18,6 +18,10 @@ class App extends React.Component {
           .props
           .authStore
           .setAuthState(user);
+        this
+          .props
+          .postStore
+          .initPostsState();
       }
     })
   }
@@ -28,7 +32,7 @@ class App extends React.Component {
   render() {
     const {loginWithFacebook, authState} = this.props.authStore;
     const {authed} = authState;
-    if(!authed){
+    if (!authed) {
       return (<Auth loginWithFacebook={loginWithFacebook}/>)
     }
     const appStyle = {
@@ -40,7 +44,7 @@ class App extends React.Component {
     }
 
     const {postedDay, selectedDay} = this.props.postStore.postsState;
-    
+
     return (
       <div className="App" style={appStyle}>
         <DayPicker
@@ -58,10 +62,9 @@ class App extends React.Component {
           postsState={this.props.postStore.postsState}
           deletePost={this.props.postStore.deletePost}/>
         <Divider horizontal>Write</Divider>
-        <Write 
+        <Write
           addPost={this.props.postStore.addPost}
-          authState={this.props.authStore.authState}
-        />
+          authState={this.props.authStore.authState}/>
         <Divider horizontal>END</Divider>
       </div>
     );

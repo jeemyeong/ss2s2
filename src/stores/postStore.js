@@ -13,9 +13,8 @@ export class PostStore {
   databaseRef = database.ref();
   storageRef = storage.ref();
 
-  constructor() {
-    const ref = database.ref();
-    ref
+  initPostsState() {
+    this.databaseRef
       .child('posts')
       .on('value', action((snapshot) => {
         if (snapshot) {
