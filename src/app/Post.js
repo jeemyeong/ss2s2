@@ -19,11 +19,11 @@ class Post extends Component {
             .map((photoUrl, index) => <Image src={photoUrl} key={index}/>)
           : null}
         <Card.Content>
-          <Card.Header>{post.writter}</Card.Header>
+          <Card.Header>{post.text}</Card.Header>
           <Card.Meta>{post
               .date
-              .toDateString()}</Card.Meta>
-          <Card.Description>{post.text}</Card.Description>
+              .toLocaleDateString()}</Card.Meta>
+          <Card.Description>{post.writter}</Card.Description>
         </Card.Content>
         {/* <Card.Content extra>
             <a>
