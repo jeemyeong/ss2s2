@@ -18,6 +18,9 @@ export default class Masonry extends React.Component{
 	}
 	
 	onResize(){
+		if(!this.refs.Masonry.offsetWidth){
+			return;
+		}
 		const columns = this.getColumns(this.refs.Masonry.offsetWidth);
 		if(columns !== this.state.columns){
 			this.setState({columns: columns});	
