@@ -25,8 +25,8 @@ export class PostStore {
             posts: [],
             postedDay: [],
             postsByDay: {},
-            StringifiedSelectedDay: new Date().toLocaleDateString(),
-            selectedDay: new Date(),
+            StringifiedSelectedDay: this.postsState.StringifiedSelectedDay,
+            selectedDay: this.postsState.selectedDay,
             auth: "jeemyeong"
           }
           if (list !== null) {
