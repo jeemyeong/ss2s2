@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
 import {Card, Grid, Image} from 'semantic-ui-react'
-class Post extends Component {
+import {observer} from 'mobx-react';
+
+const Post = observer(class Post extends Component {
   render() {
-    const {posts} = this.props;
+    const {postsByDay, StringifiedSelectedDay} = this.props.postStore
+    const posts = postsByDay[StringifiedSelectedDay]
     if (!posts) {
       return null;
     }
     const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
       <Card centered>
-        {post
-          .photoUrls
-          .map((photoUrl, index) => <Image src={photoUrl} key={index}/>)}
+        {!!post.photoUrls
+          ? post
+            .photoUrls
+            .map((photoUrl, index) => <Image src={photoUrl} key={index}/>)
+          : null}
         <Card.Content>
           <Card.Header>{post.writter}</Card.Header>
           <Card.Meta>{post
@@ -34,6 +39,6 @@ class Post extends Component {
       </div>
     );
   }
-}
+})
 
 export default Post;
