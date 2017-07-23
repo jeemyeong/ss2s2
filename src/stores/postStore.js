@@ -37,12 +37,15 @@ export class PostStore {
               for (const month of Object.keys(posts[year])) {
                 for (const date of Object.keys(posts[year][month])) {
                   const dateObj = new Date(year, month - 1, date);
-                  state.postedDays.push(dateObj)
+                  state
+                    .postedDays
+                    .push(dateObj)
                   const postsByDate = posts[year][month][date]
-                  const stringDate = year+"/"+month+"/"+date;
+                  const stringDate = year + "/" + month + "/" + date;
                   state.postsByDate[stringDate] = []
                   for (const key of Object.keys(postsByDate)) {
-                    state.postsByDate[stringDate]
+                    state
+                      .postsByDate[stringDate]
                       .push({id: key, date: dateObj, text: postsByDate[key].text, photoUrls: postsByDate[key].photoUrls, userInfo: postsByDate[key].userInfo});
                   }
                 }
@@ -60,8 +63,7 @@ export class PostStore {
       return;
     }
     const date = this.postsState.stringifiedSelectedDay
-    console.log(date);
-    const photoUrls = await this.getUrlsByUploading(photoFiles);
+    const photoUrls = await this.getUrlsByUploading(photoFiles, date);
     this
       .databaseRef
       .child('posts')
@@ -72,16 +74,22 @@ export class PostStore {
 
   @action
   deletePost = (post) => {
+    const stringifiedDate = this.toDateString(post.date)
+    const splitedStringifiedDate = stringifiedDate.split("/")
+    const ref = this
+      .databaseRef
+      .child('posts')
+      .child(splitedStringifiedDate[0])
+      .child(splitedStringifiedDate[1])
+      .child(splitedStringifiedDate[2])
+      .child(post.id)
+      .remove();
+    console.log(ref);
     if (!!post.photoUrls) {
       Object
         .keys(post.photoUrls)
-        .forEach((id, index) => this.storageRef.child(id).delete())
+        .forEach((id, index) => this.storageRef.child(stringifiedDate).child(id).delete())
     }
-    this
-      .databaseRef
-      .child('posts')
-      .child(post.id)
-      .remove();
   }
   @action
   clickDay = (clickedDay, modifiers, e) => {
@@ -92,18 +100,19 @@ export class PostStore {
     }
   }
 
-  async getUrlsByUploading(photoFiles) {
+  async getUrlsByUploading(photoFiles, date) {
     const now = Date()
     let urls = {};
     for (var i = 0; i < photoFiles.length; i++) {
-      await this.addUrlByUploading(photoFiles[i], i, now, urls);
+      await this.addUrlByUploading(photoFiles[i], i, now, urls, date);
     }
     return urls
   }
-  async addUrlByUploading(photoFile, index, date, urls) {
-    const filename = date + "(" + index + ")";
+  async addUrlByUploading(photoFile, index, now, urls, date) {
+    const filename = now + "(" + index + ")";
     const mountainsRef = this
       .storageRef
+      .child(date)
       .child(filename);
     await mountainsRef
       .put(photoFile)
