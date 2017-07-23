@@ -12,7 +12,7 @@ class Post extends Component {
       return null;
     }
     const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
-      <Card centered>
+      <Card centered className={`animated fadeIn`}>
         {!!post.photoUrls
           ? Object
             .keys(post.photoUrls)

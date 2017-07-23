@@ -5,6 +5,7 @@ import App from './app/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import './reactDayPickerStyle.css';
+import './animation.css';
 import { useStrict } from 'mobx';
 import { Provider } from 'mobx-react';
 import postStore from './stores/postStore';
