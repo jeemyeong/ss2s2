@@ -11,22 +11,6 @@ class Write extends Component {
     };
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.addPost(this.state.text, this.state.photoFiles)
-    this.setState({text: '', photoFiles: []})
-  }
-
-  onDrop = (acceptedFiles, rejectedFiles) => {
-    if (acceptedFiles[0] !== undefined) {
-      this.setState({
-        ...this.state,
-        photoFiles: acceptedFiles
-      });
-    } else {
-      console.log("ERROR");
-    }
-  }
   render() {
     const formStyle = {
       margin: "auto",
@@ -68,6 +52,27 @@ class Write extends Component {
       </Form>
     );
   }
+  handleSubmit = (e) => {
+    e.preventDefault()
+    this.props.addPost(
+      this.state.text,
+      this.state.photoFiles,
+      this.props.authState.userInfo
+    )
+    this.setState({text: '', photoFiles: []})
+  }
+
+  onDrop = (acceptedFiles, rejectedFiles) => {
+    if (acceptedFiles[0] !== undefined) {
+      this.setState({
+        ...this.state,
+        photoFiles: acceptedFiles
+      });
+    } else {
+      console.log("ERROR");
+    }
+  }
+
 }
 
 const inputBoxStyle = {

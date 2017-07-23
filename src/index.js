@@ -8,11 +8,15 @@ import './reactDayPickerStyle.css';
 import { useStrict } from 'mobx';
 import { Provider } from 'mobx-react';
 import postStore from './stores/postStore';
+import authStore from './stores/authStore';
 
 useStrict(true);
 
 ReactDOM.render(
-  <Provider postStore={postStore} >
+  <Provider 
+    postStore={postStore} 
+    authStore={authStore} 
+  >
     <App />
   </Provider>
 , document.getElementById('root'));

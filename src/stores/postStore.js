@@ -8,8 +8,7 @@ export class PostStore {
     postedDay: [],
     postsByDay: {},
     StringifiedSelectedDay: new Date().toLocaleDateString(),
-    selectedDay: new Date(),
-    auth: "jeemyeong"
+    selectedDay: new Date()
   };
   databaseRef = database.ref();
   storageRef = storage.ref();
@@ -26,8 +25,7 @@ export class PostStore {
             postedDay: [],
             postsByDay: {},
             StringifiedSelectedDay: this.postsState.StringifiedSelectedDay,
-            selectedDay: this.postsState.selectedDay,
-            auth: "jeemyeong"
+            selectedDay: this.postsState.selectedDay
           }
           if (list !== null) {
             for (const key of Object.keys(list)) {
@@ -36,7 +34,7 @@ export class PostStore {
               const date = new Date(parts[2], parts[0] - 1, parts[1]);
               state
                 .posts
-                .push({id: key, date, text: list[key].text, photoUrls: list[key].photoUrls, writter: list[key].writter});
+                .push({id: key, date, text: list[key].text, photoUrls: list[key].photoUrls, userInfo: list[key].userInfo});
             }
           }
 
@@ -68,18 +66,17 @@ export class PostStore {
   }
 
   @action
-  addPost = async(text, photoFiles) => {
+  addPost = async(text, photoFiles, userInfo) => {
     if (text === "" && photoFiles === []) {
       return;
     }
-    const writter = this.postsState.auth
     const date = this.postsState.StringifiedSelectedDay
     const post = this
       .databaseRef
       .child('posts')
       .push()
     const photoUrls = await this.getUrlsByUploading(photoFiles);
-    post.set({date, photoUrls, text, writter})
+    post.set({date, photoUrls, text, userInfo})
   }
 
   @action

@@ -6,7 +6,7 @@ import {Divider, Icon} from 'semantic-ui-react'
 @observer
 class Post extends Component {
   render() {
-    const {postsByDay, StringifiedSelectedDay} = this.props.postStore
+    const {postsByDay, StringifiedSelectedDay} = this.props.postsState
     const posts = postsByDay[StringifiedSelectedDay]
     if (!posts) {
       return null;
@@ -30,7 +30,10 @@ class Post extends Component {
           <Card.Meta>{post
               .date
               .toLocaleDateString()}</Card.Meta>
-          <Card.Description>{post.writter}</Card.Description>
+          <Card.Description>
+            <Image src={post.userInfo.photoURL} avatar />
+            {post.userInfo.displayName}
+          </Card.Description>
         </Card.Content>
         {/* <Card.Content extra>
             <a>
