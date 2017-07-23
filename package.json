@@ -2,7 +2,7 @@
   "name": "ss2s2",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://jeemyeong.github.io/ss2s2",
+  "homepage": "http://jeemyeong.github.io/ss2s2",
   "dependencies": {
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",
@@ -52,10 +52,13 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "eslint-config-react-app": "^1.0.5",
+    "gh-pages": "^1.0.0",
     "webpack-dev-server": "^2.5.0"
   },
   "jest": {
