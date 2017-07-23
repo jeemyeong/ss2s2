@@ -33,7 +33,9 @@ const AuthWrapper = ({style, children}) => (
   </div>
 )
 const authWrapperStyle = {
-  margin: "auto", align: "center", textAlign: "center",
+  margin: "auto",
+  align: "center",
+  textAlign: "center",
   position: "fixed",
   top: "50%",
   left: "50%",
@@ -41,7 +43,9 @@ const authWrapperStyle = {
   zIndex: "10"
 }
 const authWrapperMobileStyle = {
-  margin: "auto", align: "center", textAlign: "center",
+  margin: "auto",
+  align: "center",
+  textAlign: "center",
   position: "fixed",
   top: "30%",
   left: "30%",
