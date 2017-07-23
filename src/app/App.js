@@ -14,16 +14,16 @@ class App extends React.Component {
   componentDidMount() {
     this.removeListener = auth().onAuthStateChanged((user) => {
       if (user) {
-        if(user.email === "jeemyeong@gmail.com" || user.email === "soobin950@nate.com"){
-        this
-          .props
-          .authStore
-          .setAuthState(user);
-        this
-          .props
-          .postStore
-          .initPostsState();
-        }else{
+        if (user.email === "jeemyeong@gmail.com" || user.email === "soobin950@nate.com") {
+          this
+            .props
+            .authStore
+            .setAuthState(user);
+          this
+            .props
+            .postStore
+            .initPostsState();
+        } else {
           console.log("YOU Cannot JOIN");
         }
       }
@@ -47,7 +47,7 @@ class App extends React.Component {
         : "90%"
     }
 
-    const {postedDay, selectedDay} = this.props.postStore.postsState;
+    const {postedDays, selectedDay} = this.props.postStore.postsState;
 
     return (
       <div className="App" style={appStyle}>
@@ -58,7 +58,7 @@ class App extends React.Component {
           selectedDays={selectedDay}
           modifiers
           ={{
-          postedDay: postedDay.slice()
+          postedDays: postedDays.slice()
         }}
           onDayClick={(clickedDay, modifiers, e) => this.props.postStore.clickDay(clickedDay, modifiers, e)}
           style={dayPickerStyle}/>

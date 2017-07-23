@@ -6,11 +6,12 @@ import {Divider, Icon} from 'semantic-ui-react'
 @observer
 class Post extends Component {
   render() {
-    const {postsByDay, stringifiedSelectedDay} = this.props.postsState
-    const posts = postsByDay[stringifiedSelectedDay]
-    if (!posts) {
+    const {postsByDate, stringifiedSelectedDay} = this.props.postsState
+    if (!(stringifiedSelectedDay in postsByDate)) {
       return null;
     }
+    const posts = postsByDate[stringifiedSelectedDay]
+    console.log(posts.slice());
     const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
       <Card centered className={`animated fadeIn`}>
         {!!post.photoUrls

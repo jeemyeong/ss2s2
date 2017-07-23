@@ -4,9 +4,8 @@ import {database, storage} from '../database/database';
 export class PostStore {
   @observable
   postsState = {
-    posts: [],
-    postedDay: [],
-    postsByDay: {},
+    postedDays: [],
+    postsByDate: {},
     stringifiedSelectedDay: null,
     selectedDay: new Date()
   };
@@ -26,45 +25,30 @@ export class PostStore {
       .child('posts')
       .on('value', action((snapshot) => {
         if (snapshot) {
-          const list = snapshot.val();
+          const posts = snapshot.val();
           const state = {
-            posts: [],
-            postedDay: [],
-            postsByDay: {},
+            postedDays: [],
+            postsByDate: {},
             stringifiedSelectedDay: this.postsState.stringifiedSelectedDay,
             selectedDay: this.postsState.selectedDay
           }
-          if (list !== null) {
-            for (const key of Object.keys(list)) {
-              const stringDate = list[key].date
-              const parts = stringDate.split('/');
-              const date = new Date(parts[2], parts[0] - 1, parts[1]);
-              state
-                .posts
-                .push({id: key, date, text: list[key].text, photoUrls: list[key].photoUrls, userInfo: list[key].userInfo});
+          if (posts !== null) {
+            for (const year of Object.keys(posts)) {
+              for (const month of Object.keys(posts[year])) {
+                for (const date of Object.keys(posts[year][month])) {
+                  const dateObj = new Date(year, month - 1, date);
+                  state.postedDays.push(dateObj)
+                  const postsByDate = posts[year][month][date]
+                  const stringDate = year+"/"+month+"/"+date;
+                  state.postsByDate[stringDate] = []
+                  for (const key of Object.keys(postsByDate)) {
+                    state.postsByDate[stringDate]
+                      .push({id: key, date: dateObj, text: postsByDate[key].text, photoUrls: postsByDate[key].photoUrls, userInfo: postsByDate[key].userInfo});
+                  }
+                }
+              }
             }
           }
-
-          state
-            .posts
-            .map((e) => {
-              state
-                .postedDay
-                .push(e.date)
-              const stringfiedDate = this.toDateString(e.date);
-              if (!!state.postsByDay[stringfiedDate]) {
-                state
-                  .postsByDay[stringfiedDate]
-                  .push(e)
-                return null;
-              } else {
-                state.postsByDay[stringfiedDate] = []
-                state
-                  .postsByDay[stringfiedDate]
-                  .push(e)
-                return null;
-              }
-            })
           this.postsState = state;
         }
       }));
@@ -76,12 +60,14 @@ export class PostStore {
       return;
     }
     const date = this.postsState.stringifiedSelectedDay
-    const post = this
+    console.log(date);
+    const photoUrls = await this.getUrlsByUploading(photoFiles);
+    this
       .databaseRef
       .child('posts')
+      .child(date)
       .push()
-    const photoUrls = await this.getUrlsByUploading(photoFiles);
-    post.set({date, photoUrls, text, userInfo})
+      .set({date, photoUrls, text, userInfo})
   }
 
   @action
@@ -130,7 +116,7 @@ export class PostStore {
     ? "0" + n
     : n)
 
-  toDateString = (date) => (this.pad(date.getMonth()+1) + "/" + this.pad(date.getDate()) + "/" + date.getFullYear())
+  toDateString = (date) => (date.getFullYear() + "/" + this.pad(date.getMonth() + 1) + "/" + this.pad(date.getDate()))
 
 }
 
