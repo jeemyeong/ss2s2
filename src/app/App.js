@@ -5,7 +5,9 @@ import Write from './Write'
 import {observer, inject} from 'mobx-react';
 import { Divider } from 'semantic-ui-react'
 
-const App = inject("postStore")(observer(class App extends React.Component {
+@inject("postStore")
+@observer
+class App extends React.Component {
 
   render() {
     const state = this.props.postStore.postsState;
@@ -29,7 +31,7 @@ const App = inject("postStore")(observer(class App extends React.Component {
       </div>
     );
   }
-}))
+}
 
 const dayPickerStyle = {
   position: "fixed",

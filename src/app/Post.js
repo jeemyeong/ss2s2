@@ -3,7 +3,8 @@ import {Card, Grid, Image} from 'semantic-ui-react'
 import {observer} from 'mobx-react';
 import { Divider } from 'semantic-ui-react'
 
-const Post = observer(class Post extends Component {
+@observer
+class Post extends Component {
   render() {
     const {postsByDay, StringifiedSelectedDay} = this.props.postStore
     const posts = postsByDay[StringifiedSelectedDay]
@@ -41,6 +42,6 @@ const Post = observer(class Post extends Component {
       </div>
     );
   }
-})
+}
 
 export default Post;
