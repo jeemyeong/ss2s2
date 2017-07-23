@@ -27,10 +27,9 @@ export class PostStore {
         if (snapshot) {
           const posts = snapshot.val();
           const state = {
+            ...this.postsState,
             postedDays: [],
-            postsByDate: {},
-            stringifiedSelectedDay: this.postsState.stringifiedSelectedDay,
-            selectedDay: this.postsState.selectedDay
+            postsByDate: {}
           }
           if (posts !== null) {
             for (const year of Object.keys(posts)) {
@@ -76,7 +75,7 @@ export class PostStore {
   deletePost = (post) => {
     const stringifiedDate = this.toDateString(post.date)
     const splitedStringifiedDate = stringifiedDate.split("/")
-    const ref = this
+    this
       .databaseRef
       .child('posts')
       .child(splitedStringifiedDate[0])
@@ -84,7 +83,6 @@ export class PostStore {
       .child(splitedStringifiedDate[2])
       .child(post.id)
       .remove();
-    console.log(ref);
     if (!!post.photoUrls) {
       Object
         .keys(post.photoUrls)
