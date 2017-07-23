@@ -14,10 +14,6 @@ export class AuthStore {
   }
   @action
   setAuthState = (user) => {
-    if(user.email !== "jeemyeong@gmail.com" && user.email !== "soobin9501@gmail.com"){
-      console.log("YOU CANNOT JOIN");
-      return
-    }
     const userInfo= {
       displayName: user.displayName,
       email: user.email,
