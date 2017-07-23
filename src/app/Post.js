@@ -6,8 +6,8 @@ import {Divider, Icon} from 'semantic-ui-react'
 @observer
 class Post extends Component {
   render() {
-    const {postsByDay, StringifiedSelectedDay} = this.props.postsState
-    const posts = postsByDay[StringifiedSelectedDay]
+    const {postsByDay, stringifiedSelectedDay} = this.props.postsState
+    const posts = postsByDay[stringifiedSelectedDay]
     if (!posts) {
       return null;
     }
@@ -45,7 +45,7 @@ class Post extends Component {
     </Grid.Column>);
     return (
       <div className="Post">
-        <Divider horizontal>{StringifiedSelectedDay}</Divider>
+        <Divider horizontal>{stringifiedSelectedDay}</Divider>
         <Grid columns={4} stackable>
           {parsedPosts}
         </Grid>

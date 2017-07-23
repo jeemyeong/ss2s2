@@ -7,14 +7,22 @@ export class PostStore {
     posts: [],
     postedDay: [],
     postsByDay: {},
-    StringifiedSelectedDay: new Date().toLocaleDateString(),
+    stringifiedSelectedDay: null,
     selectedDay: new Date()
   };
   databaseRef = database.ref();
   storageRef = storage.ref();
 
+  constructor(props) {
+    this.postsState = {
+      ...this.postsState,
+      stringifiedSelectedDay: this.toDateString(this.postsState.selectedDay)
+    }
+  }
+
   initPostsState() {
-    this.databaseRef
+    this
+      .databaseRef
       .child('posts')
       .on('value', action((snapshot) => {
         if (snapshot) {
@@ -23,20 +31,14 @@ export class PostStore {
             posts: [],
             postedDay: [],
             postsByDay: {},
-            StringifiedSelectedDay: this.postsState.StringifiedSelectedDay,
+            stringifiedSelectedDay: this.postsState.stringifiedSelectedDay,
             selectedDay: this.postsState.selectedDay
           }
           if (list !== null) {
             for (const key of Object.keys(list)) {
               const stringDate = list[key].date
               const parts = stringDate.split('/');
-              let date;
-              if(parts.length > 1){
-                date = new Date(parts[2], parts[0] - 1, parts[1]);
-              }else{
-                const originalParts = stringDate.replace(".","").split(' ')
-                date = new Date(originalParts[0], originalParts[1] - 1, originalParts[2]);
-              }
+              const date = new Date(parts[2], parts[0] - 1, parts[1]);
               state
                 .posts
                 .push({id: key, date, text: list[key].text, photoUrls: list[key].photoUrls, userInfo: list[key].userInfo});
@@ -49,18 +51,16 @@ export class PostStore {
               state
                 .postedDay
                 .push(e.date)
-              const date = e
-                .date
-                .toLocaleDateString();
-              if (!!state.postsByDay[date]) {
+              const stringfiedDate = this.toDateString(e.date);
+              if (!!state.postsByDay[stringfiedDate]) {
                 state
-                  .postsByDay[date]
+                  .postsByDay[stringfiedDate]
                   .push(e)
                 return null;
               } else {
-                state.postsByDay[date] = []
+                state.postsByDay[stringfiedDate] = []
                 state
-                  .postsByDay[date]
+                  .postsByDay[stringfiedDate]
                   .push(e)
                 return null;
               }
@@ -75,7 +75,7 @@ export class PostStore {
     if (text === "" && photoFiles === []) {
       return;
     }
-    const date = this.postsState.StringifiedSelectedDay
+    const date = this.postsState.stringifiedSelectedDay
     const post = this
       .databaseRef
       .child('posts')
@@ -86,22 +86,26 @@ export class PostStore {
 
   @action
   deletePost = (post) => {
-    if(!!post.photoUrls){
-      Object.keys(post.photoUrls).forEach((id, index) =>
-        this.storageRef.child(id).delete()
-      )
+    if (!!post.photoUrls) {
+      Object
+        .keys(post.photoUrls)
+        .forEach((id, index) => this.storageRef.child(id).delete())
     }
-    this.databaseRef
+    this
+      .databaseRef
       .child('posts')
       .child(post.id)
       .remove();
   }
   @action
   clickDay = (clickedDay, modifiers, e) => {
-    this.postsState.StringifiedSelectedDay = clickedDay.toLocaleDateString();
-    this.postsState.selectedDay = clickedDay;
+    this.postsState = {
+      ...this.postsState,
+      stringifiedSelectedDay: this.toDateString(clickedDay),
+      selectedDay: clickedDay
+    }
   }
-  
+
   async getUrlsByUploading(photoFiles) {
     const now = Date()
     let urls = {};
@@ -121,6 +125,12 @@ export class PostStore {
         urls[filename] = snapshot.metadata.downloadURLs[0];
       });
   }
+
+  pad = (n) => (n < 10
+    ? "0" + n
+    : n)
+
+  toDateString = (date) => (this.pad(date.getMonth()+1) + "/" + this.pad(date.getDate()) + "/" + date.getFullYear())
 
 }
 
