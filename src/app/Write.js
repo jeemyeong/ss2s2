@@ -6,30 +6,28 @@ class Write extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contents: '',
-      files: []
+      text: '',
+      photoFiles: []
     };
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    // this.props.onCreatePost(this.props.userInfo, this.state.contents,
-    // this.state.file)
-    this.setState({contents: '', file: null})
+    this.props.addPost(this.state.text, this.state.photoFiles)
+    this.setState({text: '', photoFiles: []})
   }
 
   onDrop = (acceptedFiles, rejectedFiles) => {
     if (acceptedFiles[0] !== undefined) {
       this.setState({
         ...this.state,
-        files: acceptedFiles
+        photoFiles: acceptedFiles
       });
     } else {
       console.log("ERROR");
     }
   }
   render() {
-
     const formStyle = {
       margin: "auto",
       marginBottom: "2em",
@@ -43,8 +41,8 @@ class Write extends Component {
           control={TextArea}
           style={inputBoxStyle}
           placeholder='하고 싶은 말😘'
-          value={this.state.contents}
-          onChange={e => this.setState({contents: e.target.value})}/>
+          value={this.state.text}
+          onChange={e => this.setState({text: e.target.value})}/>
 
         <Dropzone
           onDrop={this.onDrop}
@@ -52,10 +50,10 @@ class Write extends Component {
           accept={`image/*`}
           style={dropZoneStyle}>
           <div style={explanationStyle}>
-            {this.state.files.length > 0
+            {this.state.photoFiles.length > 0
               ? this
                 .state
-                .files
+                .photoFiles
                 .map((file, index) => <Image src={file.preview} key={index}/>)
               : <Icon name="image" size="big"/>}
           </div>
