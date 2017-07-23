@@ -11,7 +11,6 @@ class Post extends Component {
       return null;
     }
     const posts = postsByDate[stringifiedSelectedDay]
-    console.log(posts.slice());
     const parsedPosts = posts.map((post, index) => <Grid.Column key={index}>
       <Card centered className={`animated fadeIn`}>
         {!!post.photoUrls
