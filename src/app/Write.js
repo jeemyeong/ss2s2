@@ -32,7 +32,7 @@ class Write extends Component {
 
         <Dropzone
           onDrop={this.onDrop}
-          maxSize={2097152}
+          maxSize={5242880}
           accept={`image/*`}
           style={dropZoneStyle}>
           <div style={explanationStyle}>
@@ -63,6 +63,7 @@ class Write extends Component {
   }
 
   onDrop = (acceptedFiles, rejectedFiles) => {
+    console.log(acceptedFiles);
     if (acceptedFiles[0] !== undefined) {
       this.setState({
         ...this.state,
