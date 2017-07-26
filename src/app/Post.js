@@ -14,7 +14,7 @@ class Post extends Component {
     const posts = postsByDate[stringifiedSelectedDay]
     const parsedPosts = []
     const { innerWidth } = window;
-    const brakePoints = innerWidth < 768? [] : innerWidth < 1000? [innerWidth/2] : [250,500,750]
+    const brakePoints = innerWidth < 768? [] : innerWidth < 1000? [innerWidth/2] : innerWidth < 1200? [innerWidth/3,innerWidth*2/3,] : [innerWidth/4,innerWidth/2,innerWidth*3/4]
     posts.map((post, index) => {
       parsedPosts.push(
         <CardWrapper
