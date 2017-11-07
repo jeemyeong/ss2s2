@@ -30,6 +30,7 @@ class Post extends Component {
                   style={ImageWrapperStyle}
                   key={index}
                 >
+                  <Image src={post.photoUrls[id]} />
                 </ImageWrapper>
                 )
               : null}
