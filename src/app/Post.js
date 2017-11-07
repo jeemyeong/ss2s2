@@ -30,7 +30,6 @@ class Post extends Component {
                   style={ImageWrapperStyle}
                   key={index}
                 >
-                  <Image src={post.photoUrls[id]} />
                 </ImageWrapper>
                 )
               : null}
@@ -47,7 +46,6 @@ class Post extends Component {
                   .date
                   .toLocaleDateString()}</Card.Meta>
               <Card.Description>
-                <Image src={post.userInfo.photoURL} avatar />
                 {post.userInfo.displayName}
               </Card.Description>
             </Card.Content>
