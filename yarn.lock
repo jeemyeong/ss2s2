@@ -5109,10 +5109,6 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-masonry@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-masonry/-/react-masonry-1.0.0.tgz#ead8f4849856cdfeb8a9e11309b50c16b89ec461"
-
 react@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
