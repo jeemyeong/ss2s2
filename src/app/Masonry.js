@@ -5,7 +5,8 @@ export default class Masonry extends React.Component{
 		super(props);
 		this.state = {
 			columns: 1,
-			hasRendered: false
+			hasRendered: false,
+			count: 0
 		};
 		this.onResize = this.onResize.bind(this);
 		this.mapChildrenForRenderedComponents = this.mapChildrenForRenderedComponents.bind(this);
@@ -34,6 +35,9 @@ export default class Masonry extends React.Component{
 	
 	onResize(){
 		if(!!this.refs.Masonry && !('offsetWidth' in this.refs.Masonry)){
+			return;
+		}
+		if(!this.refs.Masonry) {
 			return;
 		}
 		const columns = this.getColumns(this.refs.Masonry.offsetWidth);
@@ -100,7 +104,14 @@ export default class Masonry extends React.Component{
 			return p;
 		}, col);
 	}
-	
+	shouldComponentUpdate(nextProps, nextState){
+		const count = nextProps.children.length;
+		if (count > this.state.count) {
+			this.setState({count: count, hasRendered: false})
+			return false;
+		}
+		return true;
+	}
 	render(){
 		let cnt = -1;
 		return (
