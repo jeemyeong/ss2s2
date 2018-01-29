@@ -25,9 +25,11 @@ export default class Masonry extends React.Component{
 	}
 	
 	getColumns(w){
-		return this.props.brakePoints.reduceRight( (p, c, i) => {
+		const { innerWidth } = window;
+		const brakePoints = innerWidth < 768? [] : innerWidth < 1000? [innerWidth/2] : innerWidth < 1200? [innerWidth/3,innerWidth*2/3,] : [innerWidth/4,innerWidth/2,innerWidth*3/4];
+		return brakePoints.reduceRight( (p, c, i) => {
 			return c < w ? p : i;
-		}, this.props.brakePoints.length) + 1;
+		}, brakePoints.length) + 1;
 	}
 	
 	onResize(){
