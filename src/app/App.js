@@ -15,7 +15,7 @@ class App extends React.Component {
     this.removeListener = auth().onAuthStateChanged((user) => {
       if (user) {
         // Temporarily public
-        if (user.email === "jeemyeong@gmail.com" || user.email === "soobin950@nate.com" || true) {
+        if (user.email === "jeemyeong@gmail.com" || user.email === "soobin950@nate.com") {
           this
             .props
             .authStore
