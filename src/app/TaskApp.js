@@ -25,9 +25,9 @@ const AppHead = ({addTask}) => {
   );
 };
 
-const Task = ({task, remove, id}) => {
+const Task = ({task, remove}) => {
   return (
-    <li className='task-item'>{task.text} <span className='fa fa-trash-o task-remover pull-right' onClick={() => {remove(id)}}></span></li>
+    <li className='task-item'>{task.text} <span className='fa fa-trash-o task-remover pull-right' onClick={() => {remove(task)}}></span></li>
   );
 }
 
@@ -35,7 +35,7 @@ const Task = ({task, remove, id}) => {
 const AppList = ({tasks,remove}) => {
   // Create new node for each task
   const taskNode = tasks.map((task, index) => {
-    return (<Task task={task} key={index} remove={remove} id={index}/>)
+    return (<Task task={task} key={index} remove={remove}/>)
   });
 
   // Return the list component with all tasks

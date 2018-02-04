@@ -1,88 +1,47 @@
 import {observable, action} from 'mobx';
 import {database, storage} from '../database/database';
+var _ = require('partial-js');
 
 export class TaskStore {
   @observable
   taskState = {
-    data: [],
-    hello: "world"
+    data: []
   };
   databaseRef = database.ref();
   storageRef = storage.ref();
 
-  constructor(props) {
-    // console.log(this);
-    this.taskState = {
-      data: []
-    }
+  initTaskState() {
+    this.databaseRef.child('tasks')
+      .on('value', action((snapshot) => {
+        if (snapshot) {
+          const tasks = _.go(
+            snapshot.val(),
+            _.mapObject((val, key) => { return {...val,key}}),
+            _.values
+          )
+          const state = {
+            ...this.taskState,
+            data: tasks
+          }
+          this.taskState = state;
+        }
+      }));
   }
-  // initPostsState() {
-  //   this
-  //     .databaseRef
-  //     .child('posts')
-  //     .on('value', action((snapshot) => {
-  //       if (snapshot) {
-  //         const posts = snapshot.val();
-  //         const state = {
-  //           ...this.taskState,
-  //           postedDays: [],
-  //           postsByDate: {}
-  //         }
-  //         if (posts !== null) {
-  //           for (const year of Object.keys(posts)) {
-  //             for (const month of Object.keys(posts[year])) {
-  //               for (const date of Object.keys(posts[year][month])) {
-  //                 const dateObj = new Date(year, month - 1, date);
-  //                 state
-  //                   .postedDays
-  //                   .push(dateObj)
-  //                 const postsByDate = posts[year][month][date]
-  //                 const stringDate = year + "/" + month + "/" + date;
-  //                 state.postsByDate[stringDate] = []
-  //                 for (const key of Object.keys(postsByDate)) {
-  //                   state
-  //                     .postsByDate[stringDate]
-  //                     .push({id: key, date: dateObj, text: postsByDate[key].text, photoUrls: postsByDate[key].photoUrls, userInfo: postsByDate[key].userInfo});
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //         this.taskState = state;
-  //       }
-  //     }));
-  // }
 
-  @action
   addTask = (val) => {
-    const task = {
-      text: val
-    }
-    
     if (val.length === 0) {
       return;
     }
 
-    const cloneData = this.taskState.data.slice();
-    cloneData.push(task);
-    
-    this.taskState = {
-      ...this.taskState,
-      data: cloneData
+    const task = {
+      text: val
     }
+    
+    this.databaseRef.child('tasks').push().set(task)
   }
   
-  @action
-  removeTask = (id) => {
-    const cloneData = this.taskState.data.slice();
-    const remainData = cloneData.filter((task, index) => {
-      if (index !== id) return task;
-    })
-    // Update state with filtered results
-    this.taskState = {
-      ...this.taskState,
-      data: remainData
-    }
+  removeTask = (task) => {
+    this.databaseRef.child('tasks').child(task.key).remove()
   }
 }
 

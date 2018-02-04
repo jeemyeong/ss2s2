@@ -13,21 +13,19 @@ import {auth} from '../database/database';
 @inject("taskStore")
 @observer
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.postStore.initPostsState();
+    this.props.taskStore.initTaskState();
+  }
+  
   componentDidMount() {
     this.removeListener = auth().onAuthStateChanged((user) => {
       if (user) {
-        // Temporarily public
         if (user.email === "jeemyeong@gmail.com" || user.email === "soobin950@nate.com") {
-          this
-            .props
-            .authStore
-            .setAuthState(user);
-          this
-            .props
-            .postStore
-            .initPostsState();
+          this.props.authStore.setAuthState(user);
         } else {
-          console.log("YOU Cannot JOIN");
+          alert("YOU Cannot JOIN");
         }
       }
     })
