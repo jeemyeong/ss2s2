@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './Post';
+import TaskApp from './TaskApp';
 import Write from './Write'
 import Auth from './Auth'
 import DayPicker from 'react-day-picker';
@@ -37,9 +38,9 @@ class App extends React.Component {
   render() {
     const {loginWithFacebook, authState} = this.props.authStore;
     const {authed} = authState;
-    if (!authed) {
-      return (<Auth loginWithFacebook={loginWithFacebook}/>)
-    }
+    // if (!authed) {
+    //   return (<Auth loginWithFacebook={loginWithFacebook}/>)
+    // }
     const appStyle = {
       margin: "auto",
       textAlign: "center",
@@ -52,6 +53,7 @@ class App extends React.Component {
 
     return (
       <div className="App" style={appStyle}>
+        <TaskApp/>
         <DayPicker
           numberOfMonths={window.innerWidth < 768
           ? 1
