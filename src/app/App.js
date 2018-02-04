@@ -10,6 +10,7 @@ import {auth} from '../database/database';
 
 @inject("postStore")
 @inject("authStore")
+@inject("taskStore")
 @observer
 class App extends React.Component {
   componentDidMount() {
@@ -50,10 +51,13 @@ class App extends React.Component {
     }
 
     const {postedDays, selectedDay} = this.props.postStore.postsState;
-
     return (
       <div className="App" style={appStyle}>
-        <TaskApp/>
+        <TaskApp
+          taskState={this.props.taskStore.taskState}
+          addTask={this.props.taskStore.addTask}
+          removeTask={this.props.taskStore.removeTask}
+        />
         <DayPicker
           numberOfMonths={window.innerWidth < 768
           ? 1

@@ -10,6 +10,7 @@ import { useStrict } from 'mobx';
 import { Provider } from 'mobx-react';
 import postStore from './stores/postStore';
 import authStore from './stores/authStore';
+import taskStore from './stores/taskStore';
 
 useStrict(true);
 
@@ -17,6 +18,7 @@ ReactDOM.render(
   <Provider 
     postStore={postStore} 
     authStore={authStore} 
+    taskStore={taskStore} 
   >
     <App />
   </Provider>
