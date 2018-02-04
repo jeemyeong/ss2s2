@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'partial-js';
 
 export default class Masonry extends React.Component{
 	constructor(props){
@@ -16,12 +17,10 @@ export default class Masonry extends React.Component{
 		window.addEventListener('resize', this.onResize)	
 	}
 	componentDidUpdate(){
-		if (!this.state.hasRendered){
-			setTimeout(() => {
-				this.setState({
-					hasRendered: true
-				})
-			}, 1000);
+		if (!this.state.hasRendered) {
+			this.setState({
+				hasRendered: true
+			})
 		}
 	}
 	
@@ -104,22 +103,26 @@ export default class Masonry extends React.Component{
 			return p;
 		}, col);
 	}
-	shouldComponentUpdate(nextProps, nextState){
+	componentWillReceiveProps(nextProps) {
 		const count = nextProps.children.length;
-		if (count > this.state.count) {
-			this.setState({count: count, hasRendered: false})
-			return false;
-		}
-		return true;
+		this.setState({count: count, hasRendered: false})
+		return false;
 	}
+	shouldComponentUpdate(nextProps, nextState) {
+		if (this.state === nextState && this.props === nextProps) {
+			return false
+		}
+		return true
+	}
+	
 	render(){
 		let cnt = -1;
 		return (
 			<div style={MasonryStyle} ref="Masonry">
-				{this.mapChildren().map((col, ci) => {
+				{_.map(this.mapChildren(), (col, ci) => {
 					return (
 						<div style={ColumnStyle} key={ci} >
-							{col.map((child, i) => {
+							{_.map(col, (child, i) => {
 								cnt += 1
 								return <div key={i} ref={"Masonry"+cnt} >{child}</div>
 							})}
