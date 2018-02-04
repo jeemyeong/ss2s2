@@ -3,7 +3,7 @@ import {Card, Image} from 'semantic-ui-react'
 import {observer} from 'mobx-react';
 import {Divider, Icon} from 'semantic-ui-react'
 import Masonry from './Masonry'
-var _ = require('partial-js');
+import _ from 'partial-js';
 
 @observer
 class Post extends Component {

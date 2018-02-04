@@ -1,5 +1,6 @@
 import {observable, action} from 'mobx';
 import {database, storage} from '../database/database';
+import _ from 'partial-js';
 
 export class PostStore {
   @observable
@@ -75,14 +76,7 @@ export class PostStore {
   deletePost = (post) => {
     const stringifiedDate = this.toDateString(post.date)
     const splitedStringifiedDate = stringifiedDate.split("/")
-    this
-      .databaseRef
-      .child('posts')
-      .child(splitedStringifiedDate[0])
-      .child(splitedStringifiedDate[1])
-      .child(splitedStringifiedDate[2])
-      .child(post.id)
-      .remove();
+    this.databaseRef.child('posts').child(splitedStringifiedDate[0]).child(splitedStringifiedDate[1]).child(splitedStringifiedDate[2]).child(post.id).remove();
     if (!!post.photoUrls) {
       Object
         .keys(post.photoUrls)

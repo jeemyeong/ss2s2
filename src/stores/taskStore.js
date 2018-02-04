@@ -1,6 +1,6 @@
 import {observable, action} from 'mobx';
 import {database, storage} from '../database/database';
-var _ = require('partial-js');
+import _ from 'partial-js';
 
 export class TaskStore {
   @observable

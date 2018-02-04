@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form, TextArea, Icon, Image} from 'semantic-ui-react'
 import Dropzone from 'react-dropzone';
+import _ from 'partial-js';
 
 class Write extends Component {
   constructor(props) {
@@ -36,12 +37,12 @@ class Write extends Component {
           accept={`image/*`}
           style={dropZoneStyle}>
           <div style={explanationStyle}>
-            {this.state.photoFiles.length > 0
-              ? this
-                .state
-                .photoFiles
-                .map((file, index) => <Image src={file.preview} key={index}/>)
-              : <Icon name="image" size="big"/>}
+            { _.go(this.state.photoFiles,
+                _.if2(files => files.length > 0)(
+                  _.map((file, index) => <Image src={file.preview} key={index}/>)
+                ).else(
+                  () =>(<Icon name="image" size="big"/>)
+                ))}
           </div>
         </Dropzone>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './TaskApp.css'
+import _ from 'partial-js';
 
 const AppHead = ({addTask}) => {
   let input;
@@ -34,9 +35,7 @@ const Task = ({task, remove}) => {
 // Create component for list of tasks
 const AppList = ({tasks,remove}) => {
   // Create new node for each task
-  const taskNode = tasks.map((task, index) => {
-    return (<Task task={task} key={index} remove={remove}/>)
-  });
+  const taskNode = _.map(tasks, (task, index) => (<Task task={task} key={index} remove={remove}/>));
 
   // Return the list component with all tasks
   return (<ul className='task-list'>{taskNode}</ul>);
