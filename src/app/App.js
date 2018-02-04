@@ -37,9 +37,9 @@ class App extends React.Component {
   render() {
     const {loginWithFacebook, authState} = this.props.authStore;
     const {authed} = authState;
-    // if (!authed) {
-    //   return (<Auth loginWithFacebook={loginWithFacebook}/>)
-    // }
+    if (!authed) {
+      return (<Auth loginWithFacebook={loginWithFacebook}/>)
+    }
     const appStyle = {
       margin: "auto",
       textAlign: "center",
